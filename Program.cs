@@ -5,10 +5,8 @@ using DuckDB.NET.Native;
 
 var cts = new CancellationTokenSource();
 
-
 using var duckDBConnection = new DuckDBConnection("Data Source=file.db");
 duckDBConnection.Open();
-
 
 using var command = duckDBConnection.CreateCommand();
 
@@ -40,6 +38,8 @@ try
         }
         catch (DuckDBException dex)
         {
+            Console.WriteLine(dex.Message);
+
             if (dex.ErrorType == DuckDBErrorType.Invalid)
             {
                 sw.Stop();
@@ -51,6 +51,7 @@ try
 }
 catch (DuckDBException dex)
 {
+    Console.WriteLine(dex.Message);
     if (dex.ErrorType == DuckDBErrorType.Invalid)
     {
         sw.Stop();
@@ -58,9 +59,6 @@ catch (DuckDBException dex)
         Console.WriteLine($"Found duplicate {value} at {sequence} in {sw.ElapsedMilliseconds}ms");
     }
 }
-
-
-
 
 namespace RandomSource
 {
