@@ -5,7 +5,10 @@ using DuckDB.NET.Native;
 
 var cts = new CancellationTokenSource();
 
-using var duckDBConnection = new DuckDBConnection("Data Source=file.db");
+
+var file = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+Console.WriteLine($"Using {file}");
+using var duckDBConnection = new DuckDBConnection($"Data Source={file}");
 duckDBConnection.Open();
 
 using var command = duckDBConnection.CreateCommand();
